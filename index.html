@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Nuestra Invitación</title>
+
+<!-- Miniatura para WhatsApp -->
+<meta property="og:title" content="Nuestra Invitación">
+<meta property="og:description" content="Nos encantará compartir este día contigo">
+<meta property="og:image" content="portada.jpg">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="portada.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f7f2eb;
+}
+
+
+/* =========================
+   SOBRE
+========================= */
+
+.fullscreen-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.envelope-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: #810101;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            0deg,
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,0.15) 0%,
+            rgba(0,0,0,0.04) 100%
+        );
+
+    background-size:
+        4px 4px,
+        4px 4px,
+        100% 100%;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    perspective: 1500px;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   SOLAPAS
+========================= */
+
+.flap {
+    position: absolute;
+    left: 0;
+
+    width: 0;
+    height: 0;
+
+    border-style: solid;
+
+    transition:
+        transform 0.9s cubic-bezier(
+            0.25,
+            0.46,
+            0.45,
+            0.94
+        );
+
+    backface-visibility: hidden;
+}
+
+.envelope-flap-top {
+    top: 0;
+
+    border-width:
+        48vh
+        50vw
+        0
+        50vw;
+
+    border-color:
+        #6e0101
+        transparent
+        transparent
+        transparent;
+
+    transform-origin: top;
+
+    z-index: 4;
+}
+
+.envelope-flap-bottom {
+    bottom: 0;
+
+    border-width:
+        0
+        50vw
+        48vh
+        50vw;
+
+    border-color:
+        transparent
+        transparent
+        #590101
+        transparent;
+
+    transform-origin: bottom;
+
+    z-index: 2;
+}
+
+.envelope-flap-left {
+    top: 0;
+
+    border-width:
+        50vh
+        0
+        50vh
+        50vw;
+
+    border-color:
+        transparent
+        transparent
+        transparent
+        #740101;
+
+    z-index: 1;
+}
+
+.envelope-flap-right {
+    top: 0;
+    right: 0;
+    left: auto;
+
+    border-width:
+        50vh
+        50vw
+        50vh
+        0;
+
+    border-color:
+        transparent
+        #740101
+        transparent
+        transparent;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   SELLO
+========================= */
+
+.center-group {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 5;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+.seal {
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.3);
+
+    margin-bottom: 20px;
+
+    border:
+        2px solid rgba(255,255,255,0.6);
+}
+
+.view-text {
+    font-size: 14px;
+
+    color: #ffffff;
+
+    font-weight: 400;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2.5px;
+
+    opacity: 0.9;
+
+    pointer-events: none;
+
+    background-color:
+        rgba(129,1,1,0.85);
+
+    padding:
+        5px 12px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.invitation-content {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.8s ease 0.4s;
+
+    z-index: 3;
+
+    background-color: #f7f2eb;
+
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-wrapper {
+    width: 100%;
+
+    max-width: 420px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 0;
+
+    padding: 0;
+}
+
+.portada-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* =========================
+   ANIMACIONES
+========================= */
+
+.frase-container,
+.titulo-container,
+.fotosiguiente-container,
+.titulosiguiente-container,
+.fecha-container,
+.contador-container,
+.ceremonia-container,
+.recepcion-container,
+.titulogaleria-container,
+.carrusel-container,
+.vestimenta-container,
+.regalotitulo-container,
+.regalos-container,
+.asistencia-container,
+.formulario-debajo-foto {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.frase-container.visible,
+.titulo-container.visible,
+.fotosiguiente-container.visible,
+.titulosiguiente-container.visible,
+.fecha-container.visible,
+.contador-container.visible,
+.ceremonia-container.visible,
+.recepcion-container.visible,
+.titulogaleria-container.visible,
+.carrusel-container.visible,
+.vestimenta-container.visible,
+.regalotitulo-container.visible,
+.regalos-container.visible,
+.asistencia-container.visible,
+.formulario-debajo-foto.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+.frase-img,
+.titulo-img,
+.fotosiguiente-img,
+.titulosiguiente-img,
+.fecha-img,
+.ceremonia-img,
+.recepcion-img,
+.titulogaleria-img,
+.vestimenta-img,
+.regalotitulo-img,
+.regalos-img,
+.asistencia-img {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* =========================
+   CONTADOR
+========================= */
+
+.contador-wrapper {
+
+    font-family: 'Cinzel', serif;
+
+    padding: 25px 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    background-color: #FFFFFF;
+}
+
+.contador {
+    text-align: center;
+    pointer-events: none;
+}
+
+.tiempo {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.bloque {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 0 16px;
+}
+
+.bloque span {
+
+    display: block;
+
+    font-size: 26px;
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    color: #810101;
+}
+
+.label {
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    margin-top: 8px;
+
+    color: #810101;
+
+    opacity: .8;
+}
+
+.bloque:not(:last-child) {
+
+    border-right:
+        1px solid rgba(129,1,1,.30);
+}
+
+.final {
+
+    display: none;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    color: #810101;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   UBICACIÓN
+========================= */
+
+.ubicacion-wrapper {
+
+    width: 100%;
+
+    background-color: #FFFFFF;
+
+    padding:
+        10px 20px 30px 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.btn-ubicacion {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    background: #810101;
+
+    color: #FFFFFF;
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    padding:
+        14px 28px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 4px 15px rgba(129,1,1,.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+.btn-ubicacion:active {
+
+    transform:
+        scale(0.96);
+}
+
+
+/* =========================
+   CARRUSEL (AL RAS DE ANCHO COMPLETO)
+========================= */
+
+.carrusel-wrapper-box {
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    box-shadow: none;
+}
+
+.slider-container img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.slider-container img.active {
+    opacity: 1;
+}
+
+
+/* =========================
+   FORMULARIO ASISTENCIA
+========================= */
+
+:root {
+    --color-principal: #810101;
+    --color-oscuro: #590101;
+    --color-dorado-texto: #810101;
+    --color-texto-suave: #5F5F5F;
+    --color-borde: #E6C5C5;
+    --color-fondo-input: #FCF5F5;
+}
+
+.formulario-debajo-foto {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #f7f2eb;
+    padding: 20px 0;
+}
+
+.form-container-custom {
+    width: 90%;
+    max-width: 340px;
+    margin: auto;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+label.titulo-form {
+    display: block;
+    margin-top: 15px;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 11px;
+    margin-bottom: 6px;
+    color: var(--color-dorado-texto);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.form-container-custom input[type="text"],
+.form-container-custom select,
+.form-container-custom textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    background-color: var(--color-fondo-input);
+    color: var(--color-texto-suave);
+    margin-bottom: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-container-custom input[type="text"]::placeholder,
+.form-container-custom textarea::placeholder {
+    color: #A0A0A0;
+}
+
+.form-container-custom input[type="text"]:focus,
+.form-container-custom select:focus,
+.form-container-custom textarea:focus {
+    border-color: var(--color-principal);
+    box-shadow: 0 0 8px rgba(129,1,1,.2);
+}
+
+.opciones-asistencia {
+    display: flex;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: var(--color-fondo-input);
+    gap: 1px;
+}
+
+.opcion-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 5px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--color-texto-suave);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.opcion-item input {
+    display: none;
+}
+
+.opcion-item:has(input:checked) {
+    background-color: var(--color-principal);
+    color: #FFFFFF;
+}
+
+.form-container-custom button {
+    background: linear-gradient(
+        180deg,
+        var(--color-principal) 0%,
+        var(--color-oscuro) 100%
+    );
+    color: #FFFFFF;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 11px;
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 10px rgba(129,1,1,.25);
+    transition: all 0.3s ease;
+}
+
+.form-container-custom button:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(129,1,1,.35);
+}
+
+.form-container-custom button:active {
+    transform: translateY(1px);
+}
+
+.form-container-custom button.cargando {
+    background: var(--color-borde) !important;
+    color: var(--color-texto-suave) !important;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+#exito {
+    display: none;
+    text-align: center;
+    padding: 20px 5px;
+    font-family: 'Cinzel', serif;
+}
+
+#exito h3 {
+    color: #810101;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+
+/* =========================
+   APERTURA
+========================= */
+
+.open .envelope-flap-top {
+
+    transform:
+        rotateX(-180deg);
+}
+
+.open .envelope-flap-bottom {
+
+    transform:
+        rotateX(180deg);
+}
+
+.open .center-group {
+
+    opacity: 0;
+
+    visibility: hidden;
+}
+
+.open .invitation-content {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    z-index: 10;
+}
+
+
+/* =========================
+   MÚSICA
+========================= */
+
+.music-player {
+
+    position: fixed;
+
+    bottom: 25px;
+
+    right: 25px;
+
+    width: 55px;
+
+    height: 55px;
+
+    background-color:
+        #810101;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.2);
+
+    cursor: pointer;
+
+    z-index: 200;
+
+    transition:
+        transform 0.3s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+.music-player:active {
+
+    transform:
+        scale(0.95);
+}
+
+.music-player svg {
+
+    width: 24px;
+
+    height: 24px;
+
+    fill:
+        #FFFFFF;
+}
+
+.music-player.playing {
+
+    animation:
+        pulse 2s infinite;
+}
+
+
+@keyframes pulse {
+
+    0% {
+
+        box-shadow:
+            0 0 0 0
+            rgba(129,1,1,.7);
+    }
+
+    70% {
+
+        box-shadow:
+            0 0 0 10px
+            rgba(129,1,1,0);
+    }
+
+    100% {
+
+        box-shadow:
+            0 0 0 0
+            rgba(129,1,1,0);
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="fullscreen-wrapper">
+
+
+    <!-- =========================
+         SOBRE
+    ========================== -->
+
+    <div
+        class="envelope-container"
+        id="envelope"
+        onclick="openEnvelope()"
+    >
+
+        <div class="flap envelope-flap-top"></div>
+
+        <div class="flap envelope-flap-left"></div>
+
+        <div class="flap envelope-flap-right"></div>
+
+        <div class="flap envelope-flap-bottom"></div>
+
+
+        <div class="center-group">
+
+            <img
+                src="sello.png"
+                alt="Sello"
+                class="seal"
+            >
+
+            <div class="view-text">
+                Ver invitación
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CONTENIDO
+        ========================== -->
+
+        <div
+            class="invitation-content"
+            id="scrollContainer"
+        >
+
+            <div class="card-wrapper">
+
+
+                <!-- PORTADA -->
+
+                <img
+                    src="portada.jpg"
+                    alt="Portada"
+                    class="portada-img"
+                >
+
+
+                <!-- FRASE -->
+
+                <div class="frase-container scroll-anim">
+
+                    <img
+                        src="frase.jpg"
+                        alt="Frase"
+                        class="frase-img"
+                    >
+
+                </div>
+
+
+                <!-- TITULO -->
+
+                <div class="titulo-container scroll-anim">
+
+                    <img
+                        src="titulo.jpg"
+                        alt="Titulo"
+                        class="titulo-img"
+                    >
+
+                </div>
+
+
+                <!-- FOTO SIGUIENTE -->
+
+                <div class="fotosiguiente-container scroll-anim">
+
+                    <img
+                        src="fotosiguiente.jpg"
+                        alt="Foto Siguiente"
+                        class="fotosiguiente-img"
+                    >
+
+                </div>
+
+
+                <!-- TITULO SIGUIENTE -->
+
+                <div class="titulosiguiente-container scroll-anim">
+
+                    <img
+                        src="titulosiguiente.jpg"
+                        alt="Título Siguiente"
+                        class="titulosiguiente-img"
+                    >
+
+                </div>
+
+
+                <!-- FECHA -->
+
+                <div class="fecha-container scroll-anim">
+
+                    <img
+                        src="fecha.jpg"
+                        alt="Fecha y Ubicación"
+                        class="fecha-img"
+                    >
+
+                </div>
+
+
+                <!-- =========================
+                     CONTADOR
+                ========================== -->
+
+                <div class="contador-container scroll-anim">
+
+                    <div class="contador-wrapper">
+
+                        <div
+                            class="contador"
+                            id="contador"
+                        >
+
+                            <div class="tiempo">
+
+
+                                <div class="bloque">
+
+                                    <span id="dias">
+                                        000
+                                    </span>
+
+                                    <div class="label">
+                                        DÍAS
+                                    </div>
+
+                                </div>
+
+
+                                <div class="bloque">
+
+                                    <span id="horas">
+                                        00
+                                    </span>
+
+                                    <div class="label">
+                                        HORAS
+                                    </div>
+
+                                </div>
+
+
+                                <div class="bloque">
+
+                                    <span id="minutos">
+                                        00
+                                    </span>
+
+                                    <div class="label">
+                                        MINUTOS
+                                    </div>
+
+                                </div>
+
+
+                                <div class="bloque">
+
+                                    <span id="segundos">
+                                        00
+                                    </span>
+
+                                    <div class="label">
+                                        SEGUNDOS
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="final"
+                            id="final"
+                        >
+                            ✨ ¡Hoy es el gran día! ✨
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CEREMONIA -->
+
+                <div class="ceremonia-container scroll-anim">
+
+                    <img
+                        src="ceremonia.jpg"
+                        alt="Ceremonia"
+                        class="ceremonia-img"
+                    >
+
+                </div>
+
+                <div class="ubicacion-wrapper scroll-anim">
+
+                    <a
+                        href="https://www.google.com/maps/place/Iglesia+Independiente+El+Salvador/@28.6491317,-106.0789137,16z/data=!4m6!3m5!1s0x86ea4343824696d3:0x8adb5519f51bb594!8m2!3d28.6491317!4d-106.0789137!16s%2Fg%2F11cndb_10c!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D"
+                        target="_blank"
+                        class="btn-ubicacion"
+                    >
+                        VER UBICACIÓN
+                    </a>
+
+                </div>
+
+
+                <!-- RECEPCIÓN -->
+
+                <div class="recepcion-container scroll-anim">
+
+                    <img
+                        src="recepcion.jpg"
+                        alt="Recepción"
+                        class="recepcion-img"
+                    >
+
+                </div>
+
+                <div class="ubicacion-wrapper scroll-anim">
+
+                    <a
+                        href="https://www.google.com/maps/place/Hacienda+Yairubi/@28.60221,-106.0195251,17z/data=!3m1!4b1!4m6!3m5!1s0x86ea5b02fccea73d:0x2753aba493d64e82!8m2!3d28.60221!4d-106.0195251!16s%2Fg%2F11g6ykxhm8?hl=es-mx&entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D"
+                        target="_blank"
+                        class="btn-ubicacion"
+                    >
+                        VER UBICACIÓN
+                    </a>
+
+                </div>
+
+
+                <!-- TITULO GALERÍA -->
+
+                <div class="titulogaleria-container scroll-anim">
+
+                    <img
+                        src="titulogaleria.jpg"
+                        alt="Título Galería"
+                        class="titulogaleria-img"
+                    >
+
+                </div>
+
+
+                <!-- =========================
+                     CARRUSEL (AL RAS)
+                ========================== -->
+
+                <div class="carrusel-container scroll-anim">
+
+                    <div class="carrusel-wrapper-box">
+
+                        <div
+                            class="slider-container"
+                            id="sliderContainer"
+                        >
+
+                            <img
+                                src="https://i.imgur.com/xvI8nuq.jpeg"
+                                class="active"
+                                alt="Foto 1"
+                            >
+
+                            <img
+                                src="https://i.imgur.com/0lUeOcv.jpeg"
+                                alt="Foto 2"
+                            >
+
+                            <img
+                                src="https://i.imgur.com/j388KJT.jpeg"
+                                alt="Foto 3"
+                            >
+
+                            <img
+                                src="https://i.imgur.com/BBH1Ky5.jpeg"
+                                alt="Foto 4"
+                            >
+
+                            <img
+                                src="https://i.imgur.com/lUDcTB4.jpeg"
+                                alt="Foto 5"
+                            >
+
+                            <img
+                                src="https://i.imgur.com/cndMRfY.jpeg"
+                                alt="Foto 6"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VESTIMENTA -->
+
+                <div class="vestimenta-container scroll-anim">
+
+                    <img
+                        src="vestimenta.jpg"
+                        alt="Vestimenta"
+                        class="vestimenta-img"
+                    >
+
+                </div>
+
+
+                <!-- REGALO TÍTULO -->
+
+                <div class="regalotitulo-container scroll-anim">
+
+                    <img
+                        src="regalotitulo.jpg"
+                        alt="Regalo Título"
+                        class="regalotitulo-img"
+                    >
+
+                </div>
+
+
+                <!-- REGALOS -->
+
+                <div class="regalos-container scroll-anim">
+
+                    <img
+                        src="regalos.jpg"
+                        alt="Regalos"
+                        class="regalos-img"
+                    >
+
+                </div>
+
+
+                <!-- ASISTENCIA -->
+
+                <div class="asistencia-container scroll-anim">
+
+                    <img
+                        src="asistencia.jpg"
+                        alt="Asistencia"
+                        class="asistencia-img"
+                    >
+
+                </div>
+
+
+                <!-- =========================
+                     FORMULARIO ASISTENCIA
+                ========================== -->
+
+                <div class="formulario-debajo-foto scroll-anim">
+
+                    <div class="form-container-custom">
+
+                        <div id="formContent">
+
+                            <form id="rsvpForm">
+
+                                <label class="titulo-form">Nombre Completo</label>
+
+                                <input
+                                    type="text"
+                                    name="nombre"
+                                    placeholder="Escribe tu nombre"
+                                    required
+                                >
+
+
+                                <label class="titulo-form">¿Asistirás?</label>
+
+                                <div class="opciones-asistencia">
+
+                                    <label class="opcion-item">
+
+                                        <input
+                                            type="radio"
+                                            name="asistencia"
+                                            value="1"
+                                            checked
+                                        >
+
+                                        SÍ, ASISTIRÉ
+
+                                    </label>
+
+                                    <label class="opcion-item">
+
+                                        <input
+                                            type="radio"
+                                            name="asistencia"
+                                            value="0"
+                                        >
+
+                                        NO PODRÉ ASISTIR
+
+                                    </label>
+
+                                </div>
+
+
+                                <label class="titulo-form">Mensaje o felicitación</label>
+
+                                <textarea
+                                    name="mensaje"
+                                    rows="2"
+                                    placeholder="Escribe tu mensaje (opcional)"
+                                ></textarea>
+
+
+                                <button
+                                    type="submit"
+                                    id="btn"
+                                >
+                                    Enviar Respuesta
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <div id="exito">
+
+                            <h3>
+                                ¡Muchas gracias!<br>
+                                Tu respuesta ha sido enviada.
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MÚSICA
+    ========================== -->
+
+    <div
+        class="music-player"
+        id="musicButton"
+        onclick="toggleMusic(event)"
+    >
+
+        <svg
+            id="musicIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+        >
+
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+
+        </svg>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================
+     AUDIO
+========================= -->
+
+<audio
+    id="backgroundAudio"
+    loop
+>
+
+    <source
+        src="cancion.mp3"
+        type="audio/mpeg"
+    >
+
+</audio>
+
+
+<script>
+
+/* =========================
+   APERTURA
+========================= */
+
+let isOpen = false;
+
+const audio =
+    document.getElementById('backgroundAudio');
+
+const musicButton =
+    document.getElementById('musicButton');
+
+const envelope =
+    document.getElementById('envelope');
+
+audio.preload = "auto";
+
+
+function openEnvelope() {
+
+    if (!isOpen) {
+
+        isOpen = true;
+
+        envelope.classList.add('open');
+
+
+        const playPromise =
+            audio.play();
+
+
+        if (playPromise !== undefined) {
+
+            playPromise.then(() => {
+
+                musicButton.classList.add('playing');
+
+            }).catch(error => {
+
+                console.log(
+                    "Audio necesita interacción:",
+                    error
+                );
+
+            });
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   MÚSICA
+========================= */
+
+function toggleMusic(event) {
+
+    event.stopPropagation();
+
+
+    if (audio.paused) {
+
+        audio.play();
+
+        musicButton.classList.add('playing');
+
+    } else {
+
+        audio.pause();
+
+        musicButton.classList.remove('playing');
+
+    }
+
+}
+
+
+/* =========================
+   ANIMACIONES SCROLL
+========================= */
+
+const observerOptions = {
+
+    root:
+        document.getElementById(
+            'scrollContainer'
+        ),
+
+    rootMargin:
+        '0px 0px -50px 0px',
+
+    threshold:
+        0.15
+
+};
+
+
+const observer =
+    new IntersectionObserver(
+        (entries, observer) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        'visible'
+                    );
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        observerOptions
+    );
+
+
+document
+    .querySelectorAll(
+        '.scroll-anim'
+    )
+    .forEach(el => {
+
+        observer.observe(el);
+
+    });
+
+
+/* =========================
+   CARRUSEL
+========================= */
+
+const images =
+    document.querySelectorAll(
+        '#sliderContainer img'
+    );
+
+let current = 0;
+
+
+setInterval(() => {
+
+    images[current]
+        .classList
+        .remove('active');
+
+
+    current =
+        (current + 1) %
+        images.length;
+
+
+    images[current]
+        .classList
+        .add('active');
+
+}, 3000);
+
+
+/* =========================
+   CONTADOR
+========================= */
+
+const fechaEvento =
+    new Date(
+        2026,
+        8,
+        26,
+        15,
+        30,
+        0
+    );
+
+
+const diasEl =
+    document.getElementById(
+        "dias"
+    );
+
+const horasEl =
+    document.getElementById(
+        "horas"
+    );
+
+const minutosEl =
+    document.getElementById(
+        "minutos"
+    );
+
+const segundosEl =
+    document.getElementById(
+        "segundos"
+    );
+
+
+const contador =
+    document.getElementById(
+        "contador"
+    );
+
+const final =
+    document.getElementById(
+        "final"
+    );
+
+
+function actualizarContador() {
+
+    const ahora =
+        new Date().getTime();
+
+
+    const diferencia =
+        fechaEvento.getTime() -
+        ahora;
+
+
+    if (diferencia <= 0) {
+
+        contador.style.display =
+            "none";
+
+        final.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    const dias =
+        Math.floor(
+            diferencia /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const horas =
+        Math.floor(
+            (
+                diferencia /
+                (1000 * 60 * 60)
+            ) % 24
+        );
+
+
+    const minutos =
+        Math.floor(
+            (
+                diferencia /
+                (1000 * 60)
+            ) % 60
+        );
+
+
+    const segundos =
+        Math.floor(
+            (
+                diferencia /
+                1000
+            ) % 60
+        );
+
+
+    diasEl.textContent =
+        dias;
+
+
+    horasEl.textContent =
+        horas
+            .toString()
+            .padStart(2, "0");
+
+
+    minutosEl.textContent =
+        minutos
+            .toString()
+            .padStart(2, "0");
+
+
+    segundosEl.textContent =
+        segundos
+            .toString()
+            .padStart(2, "0");
+
+}
+
+
+setInterval(
+    actualizarContador,
+    1000
+);
+
+actualizarContador();
+
+
+/* =========================
+   FORMULARIO RSVP SCRIPT
+========================= */
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwpFLgxVftgNAKdbwt8Ih145wDjNERTwRTer_P-ql9yF_kyqVecm4ZRYHV6QAK3WBY-/exec'
+const form = document.getElementById('rsvpForm');
+const btn = document.getElementById('btn');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    btn.disabled = true;
+    btn.innerText = 'Enviando...';
+    btn.classList.add('cargando');
+
+    fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(form),
+        mode: 'no-cors'
+    })
+    .then(() => {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('exito').style.display = 'block';
+    })
+    .catch(() => {
+        alert('Hubo un error al enviar.');
+        btn.disabled = false;
+        btn.innerText = 'Enviar Respuesta';
+        btn.classList.remove('cargando');
+    });
+});
+
+</script>
+
+
+</body>
+</html>
